@@ -424,35 +424,24 @@ function Ban(wave, elem_data, elem, wave_index, wave_elem, elems_to_remove, orig
     return elems_to_remove;
 }
 
-function BinarySearch(array, value, start, end) {
-    const middle = Math.floor((start + end)/2);
-    if (value == array[middle] || (value < array[middle] && value > array[middle-1])) return array[middle];
-    if (end - 1 === start) return Math.abs(array[start] - value) > Math.abs(array[end] - value) ? array[end] : array[start]; 
-    if (value > array[middle]) return BinarySearch(array, value, middle, end);
-    if (value < array[middle]) return BinarySearch(array, value, start, middle);
-}
 
 /**
  * Weighted choosing of tiles
  * @param {array} array: wave element 
  */
-function _NonZeroIndex(distribution, cweights, csumweight) {
-    let random = Math.random()*(csumweight+1);
-    let choice = Math.floor(random);
-    // binary search for first value that is larger than choice in cweights
-    let tile_choice = BinarySearch(cweights, choice, 0, cweights.length);
-    let index = cweights.indexOf(tile_choice);
-    let elem = distribution[index];
-    while(elem == 0) {
-        choice = Math.floor(Math.random()*csumweight);
-        tile_choice = BinarySearch(cweights, choice, 0, cweights.length);
-        index = cweights.indexOf(tile_choice);
-        elem = distribution[index];
+function _NonZeroIndex(array) {
+    let random = Math.random()*array.length;
+    let index = Math.floor(random);
+    let elem = array[index];
+    let zero_array = [];
+    for (let i = 0; i < array.length; i++) {
+        while(elem == 0) {
+            index = Math.floor(Math.random()*array.length);
+            elem = array[index];
+        }
+        return index;
     }
-    
-    return index;
-
-}  
+}   
 
 function OnBoundary(x, y, periodic, width, height) {
     return !periodic && (x < 0 || y < 0 || x >= width || y >= height);
