@@ -30,56 +30,6 @@ export function GetNeighbors(tiles) {
     return neighbors
 }
 
-export function GenerateItems(item_info, width, height) {
-    let item, cumulative_weights;
-    let carray=[];
-    let items = {
-        names: [],
-        weights: [],
-        amount:0,
-        frequencies: []
-    }
-    let log_weights;
-    let sum_of_weights = 0; 
-    let sum_of_log_weights = 0;
-
-    for (let i = 0; i < item_info.length; i++) {
-        item = item_info[i];
-        items["names"].push(item.name);
-        items["weights"].push(item.weight || 1);
-        items["amount"]++;
-        items["frequencies"].push(item.frequency);
-    }
-
-    log_weights = new Array(items.amount);
-    // debugger
-    cumulative_weights = items.weights.reduce(function(a,b,i){return carray[i]=a+b;},0);
-    for (let i = 0; i < items.amount; i++) {
-        log_weights[i] = items.weights[i] * Math.log(items.weights[i]);
-        sum_of_weights += items.weights[i];
-        sum_of_log_weights += log_weights[i];
-    }
-    items["log_weights"] = log_weights;
-    items["sum_of_weights"] = sum_of_weights;
-    items["sum_of_log_weights"] = sum_of_log_weights;
-    items["starting_entropy"] = Math.log(sum_of_weights) - sum_of_log_weights / sum_of_weights;
-    items["possible_choices"] = new Array(width * height);
-    items["sums_of_weights"] = new Array(width * height);
-    items["sums_of_log_weights"] = new Array(width * height);
-    items["entropies"] = new Array(width * height);
-    items["carray"] = carray;
-    items["csumweight"] = cumulative_weights;
-    return items
-}
-
-export function GenerateRules(rules_info) {
-    let rules = {};
-    for (let rule_type in rules_info) {
-        rules[rule_type] = rules_info[rule_type]
-    }
-    return rules
-}
-
 export function GenerateTiles(tiles_info, width, height) {
     let tile, tile_name, new_tile, compatible, log_weights, cumulative_weights;
     let carray = [];
