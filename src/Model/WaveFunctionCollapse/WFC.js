@@ -49,7 +49,7 @@ export function WFC(periodic, width, height, tileset_info, tile_rule, item_rule)
     }
     let tiles = tile_data["tiles"].names
     //DONE
-    console.log(wave);
+    // console.log(wave);
 
     // debugger
     return GenerateTileMap(wave, tile_amount, tiles, width, height)
@@ -111,7 +111,7 @@ function GenerateTileMap(wave, tile_amount, tiles, width, height) {
                 }
             }
             if (amount == tile_amount) {
-                console.warn(amount)
+                // console.warn(amount)
             } else {
                 for (let t = 0; t < tile_amount; t++) {
                     if (tile_elem[t]) {
@@ -409,8 +409,8 @@ function Ban(wave, elem_data, elem, wave_index, wave_elem, elems_to_remove, orig
 
     // Need to recalculate entropy for the element in the wave using Shannon Entropy
     if(elem_data.sums_of_weights[wave_index] == elem_data.weights[wave_elem] || elem_data.entropies == NaN) { 
-        console.log('oh crap ' + origin + ' is causing issues'); 
-        console.log('so is: ' + elem)
+        // console.log('oh crap ' + origin + ' is causing issues'); 
+        // console.log('so is: ' + elem)
         throw 'conflict detected'
     }
     let sum = elem_data.sums_of_weights[wave_index];    // get sum of weights for element with false tile

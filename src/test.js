@@ -23,6 +23,15 @@ exportButton.addEventListener("click", function(){
     a.click(); // wow what a terrible hack.
 });
 
+var testButton = document.getElementById("testRuns");
+testButton.addEventListener("click", function(){
+    console.log('Weighted Choosing Test')
+    for(let i = 0; i<50; i++) {
+        numButton.click();
+    }
+    console.log('done')
+});
+
 var updateButton = document.getElementById("updateButton");
 updateButton.addEventListener("click", function(){
     wfcController.getTilesUpdated();
