@@ -23,14 +23,22 @@ exportButton.addEventListener("click", function(){
     a.click(); // wow what a terrible hack.
 });
 
+var testButton = document.getElementById("testRuns");
+testButton.addEventListener("click", function(){
+    for(let i = 0; i<50; i++) {
+        console.log(i);
+        numButton.click();
+    }
+});
+
 var updateButton = document.getElementById("updateButton");
 updateButton.addEventListener("click", function(){
     wfcController.getTilesUpdated();
     wfcController.updateTileMap();
 });
 
-var updateButton = document.getElementById("itemToggle");
-updateButton.addEventListener("click", function(){
+var itemToggle = document.getElementById("itemToggle");
+itemToggle.addEventListener("click", function(){
     if (wfcController.includeItem == true) {
         wfcController.includeItem = false;
     } else {

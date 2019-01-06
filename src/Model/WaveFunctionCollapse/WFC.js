@@ -49,7 +49,7 @@ export function WFC(periodic, width, height, tileset_info, tile_rule, item_rule)
     }
     let tiles = tile_data["tiles"].names
     //DONE
-    console.log(wave);
+    // console.log(wave);
 
     // debugger
     return GenerateTileMap(wave, tile_amount, tiles, width, height)
