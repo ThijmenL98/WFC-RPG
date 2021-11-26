@@ -2,18 +2,18 @@ import {Controller} from './Controller/Controller'
 import * as test_json from "./testJSON.json!json"
 
 // Controller parameters: type, tileJSON, subset, newGame
-var wfcController = new Controller('Phaser',test_json, "item", false, true, null ,null, 2);
+const wfcController = new Controller('Phaser', test_json, "item", false, true, null, null, 2);
 wfcController.displayView();
 
-var numButton = document.getElementById("numButton");
+const numButton = document.getElementById("numButton");
 numButton.addEventListener("click", function(){
     wfcController.updateView();
 });
 
-var exportButton = document.getElementById("exportButton");
+const exportButton = document.getElementById("exportButton");
 exportButton.addEventListener("click", function(){
     wfcController.updateTileMap();
-    var json_to_file = wfcController.getTile2DJSON();
+    const json_to_file = wfcController.getTile2DJSON();
 
     let a = document.createElement("a");
     let json_string = JSON.stringify(json_to_file, null, 4);
@@ -23,7 +23,7 @@ exportButton.addEventListener("click", function(){
     a.click(); // wow what a terrible hack.
 });
 
-var testButton = document.getElementById("testRuns");
+const testButton = document.getElementById("testRuns");
 testButton.addEventListener("click", function(){
     console.log('Non-local Constraint');
     for(let i = 0; i<50; i++) {
@@ -32,19 +32,14 @@ testButton.addEventListener("click", function(){
     console.log('done')
 });
 
-var updateButton = document.getElementById("updateButton");
+let updateButton = document.getElementById("updateButton");
 updateButton.addEventListener("click", function(){
     wfcController.getTilesUpdated();
     wfcController.updateTileMap();
 });
 
-var updateButton = document.getElementById("itemToggle");
+updateButton = document.getElementById("itemToggle");
 updateButton.addEventListener("click", function(){
-    if (wfcController.includeItem == true) {
-        wfcController.includeItem = false;
-    } else {
-        wfcController.includeItem = true;
-    }
-    wfcController.itemToggle();   
-    
+    wfcController.includeItem = wfcController.includeItem !== true;
+    wfcController.itemToggle();
 });

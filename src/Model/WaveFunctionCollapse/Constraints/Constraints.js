@@ -1,16 +1,11 @@
-export function Dependency() {
-    console.log("dependency")
-}
-
 export function Locality() {
     console.log("locality")
 }
 
-export function GetDependecies(items) {
-    let dependecies = {
+export function GetDependecies() {
+    return {
         items: []
     }
-    return dependecies
 }
 
 export function GetNeighbors(tiles) {
@@ -20,10 +15,10 @@ export function GetNeighbors(tiles) {
     let tile_names = tiles["names"]
     for (let i = 0; i < tile_names.length; i++) {
         for (let j = 0; j < tile_names.length; j++) {
-            if (i == j) {
+            if (i === j) {
                 continue;
             }
-            neighbors["tiles"].push({"left":tile_names[i], "right":tile_names[j]})
+            neighbors["tiles"].push({"left": tile_names[i], "right": tile_names[j]})
         }
     }
     // debugger
@@ -32,15 +27,15 @@ export function GetNeighbors(tiles) {
 
 export function GenerateItems(item_info, width, height) {
     let item, cumulative_weights;
-    let carray=[];
+    let carray = [];
     let items = {
         names: [],
         weights: [],
-        amount:0,
+        amount: 0,
         frequencies: []
     }
     let log_weights;
-    let sum_of_weights = 0; 
+    let sum_of_weights = 0;
     let sum_of_log_weights = 0;
 
     for (let i = 0; i < item_info.length; i++) {
@@ -53,7 +48,9 @@ export function GenerateItems(item_info, width, height) {
 
     log_weights = new Array(items.amount);
     // debugger
-    cumulative_weights = items.weights.reduce(function(a,b,i){return carray[i]=a+b;},0);
+    cumulative_weights = items.weights.reduce(function (a, b, i) {
+        return carray[i] = a + b;
+    }, 0);
     for (let i = 0; i < items.amount; i++) {
         log_weights[i] = items.weights[i] * Math.log(items.weights[i]);
         sum_of_weights += items.weights[i];
@@ -91,46 +88,66 @@ export function GenerateTiles(tiles_info, width, height) {
         names: [],
         weights: [],
         IDs: {},
-        amount : 0
+        amount: 0
     };
     let cardinality = 1;
     let tile_ID = 0;
 
-    let rotation = function(x) { return x; }    // calculator rotation value to add to tile ID to get correct tile
-    let mirror = function(x) { return x; }  // calculator mirrored tile's value to get correct tile
-    
+    let rotation = function (x) {
+        return x;
+    }    // calculator rotation value to add to tile ID to get correct tile
+    let mirror = function (x) {
+        return x;
+    }  // calculator mirrored tile's value to get correct tile
+
     for (let i = 0; i < tiles_info.length; i++) {
         tile = tiles_info[i];
 
-        switch(tile.symmetry) {
+        switch (tile.symmetry) {
             case 'X':
                 break;
             case 'L':
                 cardinality = 4;
-                rotation = function(x) { return (x + 1) % 4; }
-                mirror = function(x) { return 3-x; }
+                rotation = function (x) {
+                    return (x + 1) % 4;
+                }
+                mirror = function (x) {
+                    return 3 - x;
+                }
                 break;
             case 'T':
                 cardinality = 4;
                 // debugger
-                rotation = function(x) { return (x + 1) % 4; }
-                mirror = function(x) { return x % 2 == 0 ? 2-x : x; }
+                rotation = function (x) {
+                    return (x + 1) % 4;
+                }
+                mirror = function (x) {
+                    return x % 2 === 0 ? 2 - x : x;
+                }
                 break;
             case 'I':
                 cardinality = 2;
-                rotation = function(x) { return 1 - x; }
-                mirror = function(x) { return x }
+                rotation = function (x) {
+                    return 1 - x;
+                }
+                mirror = function (x) {
+                    return x
+                }
                 break;
             case '\\':
                 cardinality = 2;
-                rotation = function(x) { return 1 - x; }
-                mirror = function(x) { return 1 - x; }
+                rotation = function (x) {
+                    return 1 - x;
+                }
+                mirror = function (x) {
+                    return 1 - x;
+                }
                 break;
             default: // Tiles with no manually assigned symmetries will default to X sym.
                 console.warn("symmetry for tile " + tile.name + "is not set! Setting symmetry to default symmetry of X. Please change symmetry.")
                 break;
         }
-        
+
         for (let c = 0; c < cardinality; c++) {
             tile_name = tile.name + ' ' + c.toString();
             // console.log(tile_name)
@@ -155,11 +172,12 @@ export function GenerateTiles(tiles_info, width, height) {
         tile_ID += cardinality;
     }
 
-
     // compatible tiles should be calculated according to neighbor constraints?
     compatible = new Array(tiles.amount);
     log_weights = new Array(tiles.amount);
-    cumulative_weights = tiles.weights.reduce(function(a,b,i){return carray[i]=a+b;},0);
+    cumulative_weights = tiles.weights.reduce(function (a, b, i) {
+        return carray[i] = a + b;
+    }, 0);
     // debugger
 
     for (let j = 0; j < width * height; j++) {

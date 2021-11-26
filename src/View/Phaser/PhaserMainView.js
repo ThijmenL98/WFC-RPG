@@ -1,12 +1,11 @@
 import * as Phaser from 'phaser'
-import {EditorView} from './PhaserEditorView'
 
 /**
  * @file Contains PhaserMainView, Game, and GameState classes
  */
 
 export class MainState extends Phaser.State {
-    init(selectorY, tileSize, tileNum, tileMap, editor, includeItem){
+    init(selectorY, tileSize, tileNum, tileMap, editor, includeItem) {
         this.tileMap = tileMap;
         this.selectorY = selectorY;
         this.tileSize = tileSize;
@@ -17,8 +16,7 @@ export class MainState extends Phaser.State {
         // debugger
     }
 
-    preload () {
-
+    preload() {
         this.game.load.tilemap(this.mapName, null, this.tileMap, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('Town_A', 'assets/tilesets/wolfsong/Town_A.png');
         this.game.load.image('car', 'assets/sprites/car.png');
@@ -29,20 +27,20 @@ export class MainState extends Phaser.State {
         // this.game.load.tilemap(tileMap.name, null, tileMap.tilemap,Phaser.Tilemap.TILED_JSON);  //game.load.tilemap('testPCG', null, pcg_tilemap, Phaser.Tilemap.TILED_JSON);
     }
 
-    create () {
+    create() {
         this.game.stage.backgroundColor = '#ccc';
         // console.log(this.tileMap);
         this.map = this.game.add.tilemap(this.mapName);
         // console.log(this.map);
-        
+
         this.map.addTilesetImage(this.map.tilesets[0].name, this.map.tilesets[0].name);
         // this.map.addTilesetImage(this.map.tilesets[1].name, this.map.tilesets[1].name);
-    
+
         let layer = this.map.createLayer(0);
         layer.fixedToCamera = false;
         // move layer in y direction to make room for selector
-        layer.position.setTo(0, this.selectorY* this.tileSize);
-    
+        layer.position.setTo(0, this.selectorY * this.tileSize);
+
         // Creates editor selection
         // this.editor = new EditorView(this.tileNum, this.tileSize, this.selectorY);
         // this.tileChanged = this.editor.GetChangedTilePair();
@@ -53,9 +51,9 @@ export class MainState extends Phaser.State {
         let items = this.game.add.group();
         items.enableBody = true;
         // Display objects using gid, x, and y position specified in TileMapModel JSON
-        if(this.includeItem == true){
-            this.map.createFromObjects('items', this.tileNum*this.tileNum+1, 'key', 0, true, false, items);
-            this.map.createFromObjects('items', this.tileNum*this.tileNum+2, 'chest', 0, true, false, items);
+        if (this.includeItem === true) {
+            this.map.createFromObjects('items', this.tileNum * this.tileNum + 1, 'key', 0, true, false, items);
+            this.map.createFromObjects('items', this.tileNum * this.tileNum + 2, 'chest', 0, true, false, items);
         }
 
         // Create editor layer
